@@ -32,7 +32,7 @@ If you subscribe to lots of topics on Desktop as the spam is minimal, you may en
 
 # Future
 
-Put into an extension of it's own rather than relying on another one that isn't open source
+Put into an extension of it's own rather than relying on another one.
 
 # License/Dislcaimer
 
