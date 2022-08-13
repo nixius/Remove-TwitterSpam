@@ -10,17 +10,14 @@ var intervalId = window.setInterval(function(){
       spans.forEach(span => {
           if(span.innerText == 'Based on your likes')
           {
-              span.style.color = 'red'
               article.remove();
           }
           else if(span.innerText == 'Viral Tweets')
           {
-              span.style.color = 'red'
               article.remove();
           }
           else if(span.innerText == 'Popular images')
           {
-              span.style.color = 'red'
               article.remove();
           }
          // 'see more' can contain topics we have subscribed to, so only remove 'spam' ones (i.e. not subsrcibed)
@@ -35,7 +32,6 @@ var intervalId = window.setInterval(function(){
               }
               else
               {
-                  span.style.color = "red";
                   article.remove();
               }
           }
