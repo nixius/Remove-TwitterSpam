@@ -16,6 +16,11 @@ var intervalId = window.setInterval(function(){
           {
               article.remove();
           }
+          else if(span.innerText.includes(' follows'))
+          {
+              span.style.color = 'red'
+              article.remove();
+          }
           else if(span.innerText == 'Popular images')
           {
               article.remove();
