@@ -1,48 +1,61 @@
-var intervalId = window.setInterval(function(){
+// ==UserScript==
+// @name         X/Twitter Cleaner
+// @namespace    http://tampermonkey.net/
+// @version      1.6
+// @description  Removes ads, widgets and other junk from X/Twitter
+// @author       You
+// @match        https://x.com/*
+// @match        https://www.x.com/*
+// @grant        none
+// @run-at       document-idle
+// ==/UserScript==
 
-  // grab all articles
-  var articles = document.querySelectorAll("article");
-   articles.forEach(article => {
-     // loop through all spans in articles
-      const spans = article.querySelectorAll("span");
-     
-     // if a span has a 'shit' text remove the article
-      spans.forEach(span => {
-          if(span.innerText == 'Based on your likes')
-          {
-              article.remove();
-          }
-          else if(span.innerText == 'Viral Tweets')
-          {
-              article.remove();
-          }
-          else if(span.innerText.includes(' follows'))
-          {
-              span.style.color = 'red'
-              article.remove();
-          }
-          else if(span.innerText == 'Popular images')
-          {
-              article.remove();
-          }
-         // 'see more' can contain topics we have subscribed to, so only remove 'spam' ones (i.e. not subsrcibed)
-         // which will have an 'X' - also code good ones green :)
-          else if(span.innerText == 'See more')
-          {
-              var spanParent = span.parentElement.parentElement;
+(function() {
+    'use strict';
 
-              if(spanParent.childNodes.length == 2)
-              {
-                  span.style.color = "green";
-              }
-              else
-              {
-                  article.remove();
-              }
-          }
-      });
+    function clean() {
 
-   });
+        // Hide ad tweets in timeline
+        document.querySelectorAll('article[data-testid="tweet"]').forEach(article => {
+            if (article.dataset.cleaned) return;
+            article.querySelectorAll('span').forEach(span => {
+                if (span.innerText === 'Ad') {
+                    article.dataset.cleaned = 'true';
+                    const cell = article.closest('div[data-testid="cellInnerDiv"]') || article;
+                    cell.style.display = 'none';
+                }
+            });
+        });
 
+        // Remove "Who to follow"
+        document.querySelectorAll('aside[aria-label="Who to follow"]').forEach(el => {
+            el.closest('div[class*="r-kemksi"]')?.style.setProperty('display', 'none', 'important') || (el.style.display = 'none');
+        });
 
-}, 200);
+        // Remove "What's happening / Trending"
+        document.querySelectorAll('div[aria-label="Timeline: Trending now"]').forEach(el => {
+            el.closest('div[class*="r-kemksi"]')?.style.setProperty('display', 'none', 'important') || (el.style.display = 'none');
+        });
+
+        // Remove "Today's News"
+        document.querySelectorAll('div[data-testid="news_sidebar"]').forEach(el => {
+            el.closest('div[class*="r-kemksi"]')?.style.setProperty('display', 'none', 'important') || (el.style.display = 'none');
+        });
+
+        // Remove "Subscribe to Premium"
+        document.querySelectorAll('aside[aria-label="Subscribe to Premium"]').forEach(el => {
+            el.closest('div[class*="r-kemksi"]')?.style.setProperty('display', 'none', 'important') || (el.style.display = 'none');
+        });
+
+        // Remove sidebar Google ad
+        document.querySelectorAll('div[data-testid="whoToFollowSspAd"]').forEach(el => {
+            el.style.display = 'none';
+        });
+    }
+
+    setTimeout(function() {
+        clean();
+        setInterval(clean, 500);
+    }, 2000);
+
+})();
