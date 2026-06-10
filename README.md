@@ -25,7 +25,7 @@ The old label-based filtering (such as 'based on your likes', 'Viral tweets' etc
 4. Save with Ctrl+S
 5. Make sure to enable "Allow scripts" in Tampermonkey's extension settings in Chrome
 
-The script only matches/runs on `https://x.com/*`.
+The script only matches/runs on `https://x.com/*`. The script checks for junk every 500ms after an initial 2 second delay on page load.
 
 # Problems
 
