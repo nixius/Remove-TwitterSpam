@@ -1,47 +1,39 @@
+# Clean X/Twitter
+
+A Tampermonkey userscript that removes ads and junk widgets from X (formerly Twitter).
+
 # Status
 
-This script isn't workign at the moment, due to X UI changes. I will sort in due course
+Working as of June 2026, using Tampermonkey. The old "Run JavaScript" Chrome extension approach no longer works due to X's Content Security Policy blocking eval() and etc.
 
-# Remove TwitterSpam
-Uses 'Run Javascript' Chrome Desktop Extension and a JS script, to remove elements I don't want to see in twitter feed on Chrome
+The old label-based filtering (such as 'based on your likes', 'Viral tweets' etc.) no longer works as X has removed those labels from the markup and it seems tweets are now injected without telling you why.
 
 # What does it do?
 
-Removes following tweet types:
-* Based on Your likes
-* Viral tweets
-* Popular images
-* non-subscribed topics
+- Removes ad tweets from the timeline
+- Removes "Who to follow" widget
+- Removes "What's happening / Trending" widget
+- Removes "Today's News" widget
+- Removes "Subscribe to Premium" widget
+- Removes sidebar Google ads
 
 # How can I use it?
-You can get the Chrome Extension here:
 
-https://chrome.google.com/webstore/detail/run-javascript/lmilalhkkdhfieeienjbiicclobibjao 
+1. Install [Tampermonkey](https://www.tampermonkey.net/) for Chrome
+2. Open the Tampermonkey dashboard and click the **+** tab to create a new script
+3. Paste in the script from this repo
+4. Save with Ctrl+S
+5. Make sure to enable "Allow scripts" in Tampermonkey's extension settings in Chrome
 
-Their website is listed there, and here is the github:
-
-https://github.com/ao/RunJavascript_ChromeExtension 
-
-I haven't looked into this to see if it's harmful, run at your own risk.
-
-The JS script I made creates a loop that runs every 200ms and checks for any 'articles' in the DOM that have a span that matches the above, then simply removes them (not hide, as would run into resource issues eventually).
-
-Once you have the run-js extension installed and set to only run on https://twitter.com, you can simply click on the extension and it will show a pop-up - copy + paste the script in and you're good to go. 
+The script only matches/runs on `https://x.com/*`.
 
 # Problems
 
-Twitter are liable to change how their markup works, so this could fail at any moment. 
-The 200ms refresh might be a bit much.
-If you subscribe to lots of topics on Desktop as the spam is minimal, you may end up with tons of crap on mobile.
+- X are liable to change their markup at any moment, breaking selectors again :(
+- Ad tweets are hidden rather than removed, as X re-renders them if removed from the DOM
+- Algorithmic tweet filtering (based on likes, viral tweets etc.) is no longer possible as X removed the labels that identified them
 
-# Future
+# License/Disclaimer
 
-Put into an extension of it's own rather than relying on another one.
-
-# License/Dislcaimer
-
-I am not really a JS Dev, so this is probably not good, so feel free to take and improve.
-
-I have some ad-block stuff set-up that removes some of the crap already, as well as Pi-Hole on a network level, so I haven't tested this for a more regular scenario, so it might just not work.
-
+Not a professional JS dev — feel free to take and improve.
 Any usage is at your own risk and by using you take on all liability.
